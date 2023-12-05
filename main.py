@@ -7,8 +7,6 @@ from models.data import load_data
 
 app = Flask(__name__)
 
-plt.rcParams["font.family"] = "Malgun Gothic"
-
 @app.route('/')
 def index():
     return render_template("index.html")
@@ -50,4 +48,4 @@ def result():
         return render_template("error.html")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
