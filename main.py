@@ -1,37 +1,32 @@
-import time
-
+from flask import Flask, render_template, request
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import streamlit as st
+from io import BytesIO
+import base64
+
+from config.make_graph import show_graph
+from models.data import load_data
+
+app = Flask(__name__)
 
 plt.rcParams["font.family"] = "Malgun Gothic"
 
-df = pd.read_csv("data.csv", encoding="cp949", thousands=",")
+@app.route('/')
+def index():
+    return render_template("index.html")
 
-def show_graph(res_df, pivot):
-    away_df = res_df.iloc[:,3:]
-    away=away_df.tail(1).to_numpy()[0]
-
-    x=np.arange(0,101)
-    fig = plt.figure(figsize=(20,10))
-
-    plt.plot(x,away,'ro--')
-    plt.plot(x,pivot[3:],'bo--')
-    plt.xticks(np.arange(0,101,5))
-
-    plt.grid()
-    plt.legend([pivot[0],res_df.iloc[-1,0]],fontsize = 16)
-    st.pyplot(fig)
-
-def main():
+@app.route('/result', methods=['POST'])
+def result():
     try:
-        pos = st.text_input('자신이 거주하고 있는 읍,면,동의 이름을 입력하시오: ')
+        pos = request.form['position']
+        
+        df = load_data()
 
         df100 = df[df['행정구역'].str.contains(pos)]
 
         all_df = df[df.columns[0:104]]
-        pivot = np.array(all_df[all_df["행정구역"].str.contains(pos)])[0]
+        pivot = np.array(all_df[all_df["행정구역"].str.contains(pos)])[0] 
         res_df = pd.DataFrame()
         mn = pivot[1]
 
@@ -48,13 +43,14 @@ def main():
                 result_name = row[0]
                 res_df = pd.concat([res_df, all_df[all_df["행정구역"]==row[0]]])
                 
-        st.text(f"가장 인구 구조가 비슷한 동네 이름: {res_df.iloc[-1,0]}")
-        show_graph(res_df, pivot)
-        
-    except:
-        time.sleep(5)
-        st.text("해당 하는 이름을 가진 행정 구역이 존재하지 않습니다.")
-        
+        names = res_df.iloc[-1, 0][:-12]
+        plot = show_graph(res_df, pivot)
+
+        return render_template("result.html", result_name=names, chart_data=plot) 
+
+    except Exception as e:
+        print(e)
+        return render_template("error.html")
 
 if __name__ == "__main__":
-    main()
+    app.run(debug=True)

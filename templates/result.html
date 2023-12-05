@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>결과 페이지</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h2 class="mb-4">가장 인구 구조가 비슷한 동네 이름: {{ result_name }}</h2>
+    <canvas id="populationChart" width="400" height="200"></canvas>
+    <script>
+        var chartData = {{ chart_data | safe }};
+
+        var ctx = document.getElementById('populationChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: chartData,
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '인구 구조 비교 그래프'
+                    }
+                },
+                scales: {
+                    x: {
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'age'
+                        }
+                    },
+                    y: {
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'population'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
