@@ -1,9 +1,6 @@
 from flask import Flask, render_template, request
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-from io import BytesIO
-import base64
 
 from config.make_graph import show_graph
 from models.data import load_data
