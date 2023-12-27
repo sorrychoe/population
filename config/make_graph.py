@@ -33,3 +33,22 @@ def show_graph(res_df, pivot):
     }
 
     return json.dumps(chart_data)
+
+
+def check_population(df, pivot, pos):
+    res_df = pd.DataFrame()
+    mn = pivot[1]
+        
+    for row in np.array(df) :
+        s = 0
+        for i in range(3, len(row)) :
+            tmp = np.abs(pivot[i]-row[i])
+            s = s + tmp 
+        if s < mn and (pos not in row[0]):
+            result = []
+            for i in range(3, len(row)) :
+                result.append(row[i])
+            mn = s          
+            result_name = row[0]
+            res_df = pd.concat([res_df, df[df["행정구역"]==row[0]]])
+    return res_df
