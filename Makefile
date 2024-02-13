@@ -1,5 +1,5 @@
 .PHONY: all install run clear
-\
+
 NAME = population distribution comparison 
 
 SHELL := bash
