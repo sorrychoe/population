@@ -9,7 +9,7 @@
 
 - 동네를 알려줄 뿐만 아니라, 해당 동네의 인구구조도 함께 알려줍니다(하단 사진 참조).
 
-![](https://github.com/sorrychoe/population/tree/master/img/example.png)
+![](https://github.com/sorrychoe/population/blob/master/img/example.png)
 
 - 인구구조가 비슷하다의 기준은 두 도시의 인구구조 그래프 간의 거리가 최소가 되는 경우로 설정하였습니다.
 
