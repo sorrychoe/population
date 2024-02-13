@@ -10,7 +10,7 @@
 </head>
 <body class="bg-light">
     <div class="container mt-5">
-        <h2 class="mb-4">가장 인구 구조가 비슷한 동네: {{ result_name }}</h2>
+        <h2 class="mb-4">가장 인구 분포가 비슷한 동네: {{ result_name }}</h2>
     <canvas id="populationChart" width="400" height="200"></canvas>
     <script>
         var chartData = {{ chart_data | safe }};
