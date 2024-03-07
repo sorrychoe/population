@@ -49,6 +49,5 @@ def check_population(df, pivot, pos):
             for i in range(3, len(row)) :
                 result.append(row[i])
             mn = s          
-            result_name = row[0]
             res_df = pd.concat([res_df, df[df["행정구역"]==row[0]]])
     return res_df
