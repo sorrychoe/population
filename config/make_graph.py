@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import json
 
+
 def show_graph(res_df, pivot):
     away_df = res_df.iloc[:, 3:]
     away = away_df.tail(1).to_numpy()[0]
