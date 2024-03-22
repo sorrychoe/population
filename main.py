@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request
-import pandas as pd
 import numpy as np
 
 from config.make_graph import show_graph, check_population
